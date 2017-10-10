@@ -1,8 +1,8 @@
 public class Car implements IProduct {
 
-    public IProductPart firstPart;
-    public IProductPart secondPart;
-    public IProductPart thirdPart;
+    private IProductPart firstPart;
+    private IProductPart secondPart;
+    private IProductPart thirdPart;
 
     @Override
     public void installFirstPart(IProductPart part) {
