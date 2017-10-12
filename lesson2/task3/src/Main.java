@@ -2,9 +2,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        AssemblyLine assembly = new AssemblyLine();
-        Car car = new Car();
-        assembly.assembleProduct(car);
+        ILineStep body = new BodyStepLine();
+        ILineStep chassis = new ChassisStepLine();
+        ILineStep engine = new EngineStepLine();
+
+        AssemblyLine assembly = new AssemblyLine(body, chassis, engine);
+        assembly.assembleProduct(new Car());
 
         System.out.println("Product creation complete!");
     }

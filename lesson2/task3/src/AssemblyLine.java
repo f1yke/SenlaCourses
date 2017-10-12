@@ -1,4 +1,15 @@
 public class AssemblyLine implements IAssemblyLine {
+
+    private ILineStep body;
+    private ILineStep chassis;
+    private ILineStep engine;
+
+    public AssemblyLine(ILineStep body, ILineStep chassis, ILineStep engine) {
+        this.body = body;
+        this.chassis = chassis;
+        this.engine = engine;
+    }
+
     @Override
     public IProduct assembleProduct(IProduct product) {
 
