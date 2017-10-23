@@ -11,20 +11,7 @@ public class Doctor extends Person {
         return patients;
     }
 
-    public void setPatient(Patient patient) {
-        if (Checker.checkLength(patients)) {
-            patients = Resizer.resize(patients);
-        }
-        int position = Checker.getPosition(patients);
-        patients[position] = patient;
-    }
-
-    public void cancelPatient(Patient patient) {
-        for (int i = 0; i < patients.length; i++) {
-            if (patients[i] == patient) {
-                patients[i] = null;
-                break;
-            }
-        }
+    public void setPatients(Patient[] patients) {
+        this.patients = patients;
     }
 }
