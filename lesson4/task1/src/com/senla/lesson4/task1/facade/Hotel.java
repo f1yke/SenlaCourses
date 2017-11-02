@@ -9,21 +9,24 @@ import com.senla.lesson4.task1.utils.Printer;
 import com.senla.lesson4.task1.utils.RoomStatus;
 import com.senla.lesson4.task1.utils.TextWorker;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Hotel {
     private ClientService clientService;
     private RoomService roomService;
     private CapabilityService capabilityService;
     private TextWorker textWorker;
 
-    public Hotel () {
-        clientService = new ClientService();
-        roomService = new RoomService();
-        capabilityService = new CapabilityService();
+    public Hotel (String capabilitiesData, String clientsData, String roomsData) throws ParseException {
+        clientService = new ClientService(clientsData);
+        roomService = new RoomService(roomsData);
+        capabilityService = new CapabilityService(capabilitiesData);
         textWorker = new TextWorker();
     }
 
     public void run() {
-
         //System.out.println("ID Price Capacity Stars Status");
         Printer.printArray(roomService.getAllRooms());
         Printer.printArray(clientService.getAllClient());
@@ -72,5 +75,12 @@ public class Hotel {
         Printer.printArray(roomService.getAllRooms());
 
         Printer.printArray(roomService.getFreeRooms());
+
+        clientService.setCapability(1, capabilityService.getCapability(1));
+        clientService.setCapability(1, capabilityService.getCapability(2));
+        Printer.printArray(clientService.getClient(1).getCapabilities());
+
+        capabilityService.sortCapabilitiesByPrice(clientService.getClient(1).getCapabilities());
+        Printer.printArray(clientService.getClient(1).getCapabilities());
     }
 }

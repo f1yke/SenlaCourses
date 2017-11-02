@@ -2,7 +2,7 @@ package com.senla.lesson4.task1.entities;
 
 public class Capability extends Entity {
     private String name;
-    private double price;
+    private Double price;
 
     public String getName() {
         return name;
@@ -12,7 +12,7 @@ public class Capability extends Entity {
         this.name = name;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 

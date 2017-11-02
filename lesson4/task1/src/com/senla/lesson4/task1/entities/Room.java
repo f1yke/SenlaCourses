@@ -1,6 +1,8 @@
 package com.senla.lesson4.task1.entities;
 
 import com.senla.lesson4.task1.utils.RoomStatus;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Room extends Entity {
@@ -52,6 +54,10 @@ public class Room extends Entity {
         StringBuilder sb = new StringBuilder();
         sb.append(getId()).append(" ").append(price).append(" ").append(capacity).append(" ")
                 .append(countStars).append(" ").append(status).append(" ");
+        if (dateOfSettle != null && dateEviction != null) {
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+            sb.append(format.format(dateOfSettle)).append(" ").append(format.format(dateEviction));
+        }
         return sb.toString();
     }
 

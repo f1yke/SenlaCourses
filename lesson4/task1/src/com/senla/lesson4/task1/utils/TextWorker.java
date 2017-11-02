@@ -6,6 +6,10 @@ import com.senla.lesson4.task1.entities.Client;
 import com.senla.lesson4.task1.entities.Entity;
 import com.senla.lesson4.task1.entities.Room;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class TextWorker {
     private TextFileWorker textFileWorker;
 
@@ -13,7 +17,7 @@ public class TextWorker {
         textFileWorker = new TextFileWorker("D:\\out.txt");
     }
 
-    public Room[] getRooms(String[] entities) {
+    public Room[] getRooms(String[] entities) throws ParseException {
         Room[] rooms = new Room[entities.length];
         for (int i = 0; i < rooms.length; i++) {
             rooms[i] = new Room();
@@ -23,6 +27,11 @@ public class TextWorker {
             rooms[i].setCapacity(Integer.parseInt(line[2]));
             rooms[i].setCountStars(Integer.parseInt(line[3]));
             rooms[i].setStatus(RoomStatus.valueOf(line[4]));
+            if (line.length > 5) {
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                rooms[i].setDateOfSettle(format.parse(line[5]));
+                rooms[i].setDateEviction(format.parse(line[6]));
+            }
         }
         return rooms;
     }

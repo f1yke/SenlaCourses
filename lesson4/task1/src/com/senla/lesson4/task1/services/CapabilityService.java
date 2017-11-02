@@ -1,5 +1,6 @@
 package com.senla.lesson4.task1.services;
 
+import com.senla.lesson4.task1.comparators.CapabilityComparator;
 import com.senla.lesson4.task1.entities.Capability;
 import com.senla.lesson4.task1.entities.Entity;
 import com.senla.lesson4.task1.repositories.CapabilityRepository;
@@ -11,8 +12,8 @@ import java.util.Arrays;
 public class CapabilityService {
     private CapabilityRepository capabilityRepository;
 
-    public CapabilityService() {
-        capabilityRepository = new CapabilityRepository();
+    public CapabilityService(String filePath) {
+        capabilityRepository = new CapabilityRepository(filePath);
     }
 
     public Capability[] getAllCapabilities() {
@@ -35,6 +36,14 @@ public class CapabilityService {
         if (!Checker.checkLength(capabilityRepository.getCapabilities()))
             capabilityRepository.setCapabilities(castEntitiesArray(ArrayWorker.resize(capabilityRepository.getCapabilities())));
         capabilityRepository.addCapability(capability);
+    }
+
+    public Capability getCapability(int id) {
+        return capabilityRepository.getCapabilityById(id);
+    }
+
+    public void sortCapabilitiesByPrice(Capability[] capabilities) {
+        Arrays.sort(capabilities, new CapabilityComparator().getCapabilityByPriceComparator());
     }
 
     private Capability[] castEntitiesArray(Entity[] entities) {

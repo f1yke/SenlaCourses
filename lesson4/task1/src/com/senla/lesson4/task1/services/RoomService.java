@@ -8,14 +8,15 @@ import com.senla.lesson4.task1.utils.Checker;
 import com.senla.lesson4.task1.utils.RoomStatus;
 import com.senla.lesson4.task1.comparators.RoomComparators;
 
+import java.text.ParseException;
 import java.util.Arrays;
 
 public class RoomService {
 
     private RoomRepository roomRepository;
 
-    public RoomService() {
-        roomRepository = new RoomRepository();
+    public RoomService(String filePath) throws ParseException {
+        roomRepository = new RoomRepository(filePath);
     }
 
     public Room[] getAllRooms() {

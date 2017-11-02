@@ -1,8 +1,16 @@
 package com.senla.lesson4.task1.entities;
 
+import com.senla.lesson4.task1.utils.ArrayWorker;
+import com.senla.lesson4.task1.utils.Checker;
+
 public class Client extends Entity {
     private String name;
     private Room room;
+    private Capability[] capabilities;
+
+    public Client() {
+        capabilities = new Capability[10];
+    }
 
     public String getName() {
         return name;
@@ -26,5 +34,14 @@ public class Client extends Entity {
         sb.append(getId()).append(" ").append(getName());
         if (room != null) sb.append(" ").append(room.getId());
         return sb.toString();
+    }
+
+
+    public Capability[] getCapabilities() {
+        return capabilities;
+    }
+
+    public void setCapabilities(Capability[] capabilities) {
+        this.capabilities = capabilities;
     }
 }

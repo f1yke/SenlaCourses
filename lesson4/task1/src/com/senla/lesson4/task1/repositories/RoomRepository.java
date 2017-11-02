@@ -5,11 +5,13 @@ import com.senla.lesson4.task1.entities.Room;
 import com.senla.lesson4.task1.utils.Checker;
 import com.senla.lesson4.task1.utils.TextWorker;
 
+import java.text.ParseException;
+
 public class RoomRepository {
     private Room[] rooms;
 
-    public RoomRepository() {
-        rooms = new TextWorker().getRooms(new TextFileWorker("D:\\in_rooms.txt").readFromFile());
+    public RoomRepository(String filePath) throws ParseException {
+        rooms = new TextWorker().getRooms(new TextFileWorker(filePath).readFromFile());
     }
 
     public Room[] getRooms() {

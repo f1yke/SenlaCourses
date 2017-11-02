@@ -7,8 +7,8 @@ import com.senla.lesson4.task1.utils.TextWorker;
 public class ClientRepository {
     private Client[] clients;
 
-    public ClientRepository() {
-        clients = new TextWorker().getClients(new TextFileWorker("D:\\in_clients.txt").readFromFile());
+    public ClientRepository(String filePath) {
+        clients = new TextWorker().getClients(new TextFileWorker(filePath).readFromFile());
     }
 
     public Client[] getClients() {
