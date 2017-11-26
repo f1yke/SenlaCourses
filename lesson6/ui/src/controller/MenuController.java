@@ -1,7 +1,6 @@
 package controller;
 
 import builder.Builder;
-import facade.Hotel;
 import navigator.Navigator;
 
 import java.util.Scanner;

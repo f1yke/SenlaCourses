@@ -63,6 +63,18 @@ public class Builder {
         printRoomsByDateItem.setTitle("Show rooms by date");
         printRoomsByDateItem.setAction(new PrintRoomsByDateAction());
 
+        MenuItem cloneItem = new MenuItem();
+        cloneItem.setTitle("Clone");
+        cloneItem.setAction(new CreateRoomCloneAction());
+
+        MenuItem importItem = new MenuItem();
+        importItem.setTitle("Import");
+        importItem.setAction(new ImportRoomAction());
+
+        MenuItem exportItem = new MenuItem();
+        exportItem.setTitle("Export");
+        exportItem.setAction(new ExportRoomAction());
+
         MenuItem backItem = new MenuItem();
         backItem.setTitle("Back");
         backItem.setNextMenu(rootMenu);
@@ -81,6 +93,9 @@ public class Builder {
         items.add(changeStatusItem);
         items.add(changePriceItem);
         items.add(printRoomsByDateItem);
+        items.add(cloneItem);
+        items.add(importItem);
+        items.add(exportItem);
         items.add(backItem);
 
         Menu menu = new Menu();
@@ -177,6 +192,14 @@ public class Builder {
         changePriceItem.setTitle("Change price");
         changePriceItem.setAction(new ChangeCapabilityPriceAction());
 
+        MenuItem importItem = new MenuItem();
+        importItem.setTitle("Import");
+        importItem.setAction(new ImportCapabilityAction());
+
+        MenuItem exportItem = new MenuItem();
+        exportItem.setTitle("Export");
+        exportItem.setAction(new ExportCapabilityAction());
+
         MenuItem backItem = new MenuItem();
         backItem.setTitle("Back");
         backItem.setNextMenu(rootMenu);
@@ -186,6 +209,8 @@ public class Builder {
         items.add(sortByPriceItem);
         items.add(addItem);
         items.add(changePriceItem);
+        items.add(importItem);
+        items.add(exportItem);
         items.add(backItem);
 
         Menu menu = new Menu();

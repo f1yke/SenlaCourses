@@ -13,13 +13,10 @@ public class ChangeStatusAction implements IAction {
     public void execute() {
         Hotel hotel = Hotel.getInstance();
         try {
-
-
             if (!hotel.getIsChangeStatus()) {
                 System.out.println("Access denied!");
                 return;
             }
-
             Scanner scanner = new Scanner(System.in);
             System.out.print("Enter room number: ");
             Integer roomId = scanner.nextInt() - 1;
