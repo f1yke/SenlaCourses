@@ -15,7 +15,7 @@ public class PropertyRepository {
         return propertyRepository;
     }
 
-    public PropertyRepository() {
+    private PropertyRepository() {
         properties = new HashMap<>();
     }
 

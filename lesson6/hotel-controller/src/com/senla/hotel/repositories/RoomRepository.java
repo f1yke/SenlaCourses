@@ -1,36 +1,35 @@
 package com.senla.hotel.repositories;
 
 import com.senla.hotel.entities.Room;
-import org.apache.log4j.Logger;
+import com.senla.hotel.utils.DataReader;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RoomRepository {
     private List<Room> rooms;
     private int lastId;
-    private Logger logger = Logger.getLogger(RoomRepository.class);
 
     private static RoomRepository roomRepository;
 
-    public static RoomRepository getInstance(String filePath) {
+    public static RoomRepository getInstance() {
         if (roomRepository == null) {
-            roomRepository = new RoomRepository(filePath);
+            roomRepository = new RoomRepository();
         }
         return roomRepository;
     }
 
-    public RoomRepository(String filePath) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            rooms = (List<Room>) ois.readObject();
+    private RoomRepository() {
+        PropertyRepository propertyRepository = PropertyRepository.getInstance();
+        rooms = (List<Room>) new DataReader().readObjects((String) propertyRepository.getProperty("roomPath"));
+        lastId = getLastId();
+    }
+
+    private Integer getLastId() {
+        Integer lastId = -1;
+        if (rooms.size() > 0) {
             lastId = rooms.get(rooms.size() - 1).getId();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            lastId = -1;
-            rooms = new ArrayList<>();
         }
+        return lastId;
     }
 
     public List<Room> getRooms() {

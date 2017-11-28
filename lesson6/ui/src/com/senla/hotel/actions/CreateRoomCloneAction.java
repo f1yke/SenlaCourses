@@ -20,7 +20,6 @@ public class CreateRoomCloneAction implements IAction {
             System.out.print("Enter new room number: ");
             Integer number = scanner.nextInt();
             Integer cloneId = hotel.createClone(id, number);
-            System.out.println(cloneId);
             if (cloneId != -1) {
                 System.out.print("Room successfully copied!\nDo you want to change anything?[yes or no]");
                 String ans = scanner.next();

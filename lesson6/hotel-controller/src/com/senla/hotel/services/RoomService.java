@@ -1,17 +1,19 @@
 package com.senla.hotel.services;
 
-import com.senla.hotel.entities.*;
-import com.senla.hotel.repositories.RoomRepository;
+import com.senla.hotel.entities.Capability;
+import com.senla.hotel.entities.Client;
+import com.senla.hotel.entities.Room;
 import com.senla.hotel.entities.RoomStatus;
+import com.senla.hotel.repositories.RoomRepository;
+import com.senla.hotel.utils.DataWriter;
 
-import java.io.*;
 import java.util.*;
 
 public class RoomService {
     private RoomRepository roomRepository;
 
-    public RoomService(String filePath) {
-        roomRepository = RoomRepository.getInstance(filePath);
+    public RoomService() {
+        roomRepository = RoomRepository.getInstance();
     }
 
     public List<Room> getAllRooms() {
@@ -143,10 +145,6 @@ public class RoomService {
     }
 
     public void writeToFile(String path) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
-            oos.writeObject(roomRepository.getRooms());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new DataWriter().writeObject(roomRepository.getRooms(), path);
     }
 }

@@ -2,8 +2,8 @@ package com.senla.hotel.services;
 
 import com.senla.hotel.entities.Capability;
 import com.senla.hotel.repositories.CapabilityRepository;
+import com.senla.hotel.utils.DataWriter;
 
-import java.io.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -11,8 +11,8 @@ import java.util.List;
 public class CapabilityService {
     private CapabilityRepository capabilityRepository;
 
-    public CapabilityService(String path) {
-        capabilityRepository = CapabilityRepository.getInstance(path);
+    public CapabilityService() {
+        capabilityRepository = CapabilityRepository.getInstance();
     }
 
     public List<Capability> getAllCapabilities() {
@@ -49,10 +49,6 @@ public class CapabilityService {
     }
 
     public void writeToFile(String path) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
-            oos.writeObject(capabilityRepository.getCapabilities());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new DataWriter().writeObject(capabilityRepository.getCapabilities(), path);
     }
 }

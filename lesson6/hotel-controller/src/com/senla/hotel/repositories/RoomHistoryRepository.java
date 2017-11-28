@@ -1,11 +1,9 @@
 package com.senla.hotel.repositories;
 
 import com.senla.hotel.entities.RoomHistory;
+import com.senla.hotel.utils.DataReader;
 import org.apache.log4j.Logger;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RoomHistoryRepository {
@@ -14,20 +12,16 @@ public class RoomHistoryRepository {
 
     private static RoomHistoryRepository roomHistoryRepository;
 
-    public static RoomHistoryRepository getInstance(String filePath) {
+    public static RoomHistoryRepository getInstance() {
         if (roomHistoryRepository == null) {
-            roomHistoryRepository = new RoomHistoryRepository(filePath);
+            roomHistoryRepository = new RoomHistoryRepository();
         }
         return roomHistoryRepository;
     }
 
-    public RoomHistoryRepository(String filePath) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            roomHistories = (List<RoomHistory>) ois.readObject();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            roomHistories = new ArrayList<>();
-        }
+    private RoomHistoryRepository() {
+        PropertyRepository propertyRepository = PropertyRepository.getInstance();
+        roomHistories = (List<RoomHistory>) new DataReader().readObjects((String) propertyRepository.getProperty("historyPath"));
     }
 
     public void addHistory(RoomHistory roomHistory) {

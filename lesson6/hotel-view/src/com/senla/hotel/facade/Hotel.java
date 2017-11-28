@@ -1,12 +1,14 @@
 package com.senla.hotel.facade;
 
-import com.senla.hotel.comparators.rooms.*;
-import com.senla.hotel.comparators.clients.*;
+import com.senla.hotel.comparators.clients.NameComparator;
+import com.senla.hotel.comparators.rooms.CapacityComparator;
+import com.senla.hotel.comparators.rooms.PriceComparator;
+import com.senla.hotel.comparators.rooms.StarsComparator;
 import com.senla.hotel.entities.*;
 import com.senla.hotel.services.*;
-import org.apache.log4j.Logger;
 import com.senla.hotel.utils.CSVReader;
 import com.senla.hotel.utils.CSVWriter;
+import org.apache.log4j.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,16 +32,16 @@ public class Hotel {
     private String capabilityPath;
     private String historyPath;
 
-    public Hotel() {
+    private Hotel() {
         propertyService = new PropertyService();
         propertyService.readProperties();
         this.getProperty();
-        clientService = new ClientService(clientPath);
-        roomService = new RoomService(roomPath);
-        capabilityService = new CapabilityService(capabilityPath);
-        roomHistoryService = new RoomHistoryService(historyPath);
-        csvReader = new CSVReader(roomPath, clientPath, capabilityPath);
-        csvWriter = new CSVWriter(roomPath, clientPath, capabilityPath);
+        clientService = new ClientService();
+        roomService = new RoomService();
+        capabilityService = new CapabilityService();
+        roomHistoryService = new RoomHistoryService();
+        csvReader = new CSVReader();
+        csvWriter = new CSVWriter();
     }
 
     private static Hotel hotel;

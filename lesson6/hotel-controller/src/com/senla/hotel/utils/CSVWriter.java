@@ -3,13 +3,14 @@ package com.senla.hotel.utils;
 import com.senla.hotel.entities.Capability;
 import com.senla.hotel.entities.Client;
 import com.senla.hotel.entities.Room;
-import org.apache.log4j.Logger;
 import com.senla.hotel.repositories.CapabilityRepository;
 import com.senla.hotel.repositories.ClientRepository;
 import com.senla.hotel.repositories.RoomRepository;
+import org.apache.log4j.Logger;
 
-import java.io.*;
-import java.text.ParseException;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
@@ -19,13 +20,13 @@ public class CSVWriter {
     private CapabilityRepository capabilityRepository;
     private Logger logger = Logger.getLogger(CSVWriter.class);
 
-    public CSVWriter(String roomPath, String clientPath, String capabilityPath) {
-        roomRepository = RoomRepository.getInstance(roomPath);
-        clientRepository = ClientRepository.getInstance(clientPath);
-        capabilityRepository = CapabilityRepository.getInstance(capabilityPath);
+    public CSVWriter() {
+        roomRepository = RoomRepository.getInstance();
+        clientRepository = ClientRepository.getInstance();
+        capabilityRepository = CapabilityRepository.getInstance();
     }
 
-    public void exportRooms(String path) throws IOException {
+    public void exportRooms(String path) {
         try (BufferedWriter csvWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path)))) {
             csvWriter.write("ID,Room number,Price,Capacity,Count stars,Status,Date of settle,Date eviction,Client ID\n");
             Iterator<Room> it = roomRepository.getRooms().iterator();
@@ -50,7 +51,7 @@ public class CSVWriter {
         }
     }
 
-    public void exportClients(String path) throws IOException, ParseException {
+    public void exportClients(String path) {
         try (BufferedWriter csvWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path)))) {
             csvWriter.write("ID,Name,RoomID\n");
             Iterator<Client> iterator = clientRepository.getClients().iterator();
@@ -71,7 +72,7 @@ public class CSVWriter {
         }
     }
 
-    public void exportCapabilities(String path) throws IOException {
+    public void exportCapabilities(String path) {
         try (BufferedWriter csvWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path)))) {
             csvWriter.write("ID,Name,Price\n");
             Iterator<Capability> it = capabilityRepository.getCapabilities().iterator();

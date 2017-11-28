@@ -1,11 +1,9 @@
 package com.senla.hotel.repositories;
 
 import com.senla.hotel.entities.Client;
+import com.senla.hotel.utils.DataReader;
 import org.apache.log4j.Logger;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientRepository {
@@ -15,22 +13,25 @@ public class ClientRepository {
 
     private static ClientRepository clientRepository;
 
-    public static ClientRepository getInstance(String filePath) {
+    public static ClientRepository getInstance() {
         if (clientRepository == null) {
-            clientRepository = new ClientRepository(filePath);
+            clientRepository = new ClientRepository();
         }
         return clientRepository;
     }
 
-    public ClientRepository(String filePath) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            clients = (List<Client>) ois.readObject();
+    private ClientRepository() {
+        PropertyRepository propertyRepository = PropertyRepository.getInstance();
+        clients = (List<Client>) new DataReader().readObjects((String) propertyRepository.getProperty("clientPath"));
+        lastId = getLastId();
+    }
+
+    private Integer getLastId() {
+        Integer lastId = -1;
+        if (clients.size() > 0) {
             lastId = clients.get(clients.size() - 1).getId();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            lastId = -1;
-            clients = new ArrayList<>();
         }
+        return lastId;
     }
 
     public void addClient(Client client) {

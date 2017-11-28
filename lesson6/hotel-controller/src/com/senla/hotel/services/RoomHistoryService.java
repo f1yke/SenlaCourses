@@ -2,16 +2,16 @@ package com.senla.hotel.services;
 
 import com.senla.hotel.entities.RoomHistory;
 import com.senla.hotel.repositories.RoomHistoryRepository;
+import com.senla.hotel.utils.DataWriter;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoomHistoryService {
     private RoomHistoryRepository roomHistoryRepository;
 
-    public RoomHistoryService(String path) {
-        roomHistoryRepository = RoomHistoryRepository.getInstance(path);
+    public RoomHistoryService() {
+        roomHistoryRepository = RoomHistoryRepository.getInstance();
     }
 
     public void addRoomHistory(RoomHistory history) {
@@ -39,11 +39,7 @@ public class RoomHistoryService {
         return lastThreeEntry;
     }
 
-    public void writeToFile(String path) throws IOException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
-            oos.writeObject(roomHistoryRepository.getRoomHistories());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void writeToFile(String path) {
+        new DataWriter().writeObject(roomHistoryRepository.getRoomHistories(), path);
     }
 }

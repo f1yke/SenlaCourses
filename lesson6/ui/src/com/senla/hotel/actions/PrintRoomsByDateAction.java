@@ -2,8 +2,8 @@ package com.senla.hotel.actions;
 
 import com.senla.hotel.api.IAction;
 import com.senla.hotel.facade.Hotel;
-import org.apache.log4j.Logger;
 import com.senla.hotel.utils.Printer;
+import org.apache.log4j.Logger;
 
 import java.util.Scanner;
 

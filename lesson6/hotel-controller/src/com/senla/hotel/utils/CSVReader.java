@@ -4,13 +4,14 @@ import com.senla.hotel.entities.Capability;
 import com.senla.hotel.entities.Client;
 import com.senla.hotel.entities.Room;
 import com.senla.hotel.entities.RoomStatus;
-import org.apache.log4j.Logger;
 import com.senla.hotel.repositories.CapabilityRepository;
 import com.senla.hotel.repositories.ClientRepository;
 import com.senla.hotel.repositories.RoomRepository;
+import org.apache.log4j.Logger;
 
-import java.io.*;
-import java.text.ParseException;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 
 public class CSVReader {
@@ -19,13 +20,13 @@ public class CSVReader {
     private CapabilityRepository capabilityRepository;
     private Logger logger = Logger.getLogger(CSVReader.class);
 
-    public CSVReader(String roomPath, String clientPath, String capabilityPath) {
-        roomRepository = RoomRepository.getInstance(roomPath);
-        clientRepository = ClientRepository.getInstance(clientPath);
-        capabilityRepository = CapabilityRepository.getInstance(capabilityPath);
+    public CSVReader() {
+        roomRepository = RoomRepository.getInstance();
+        clientRepository = ClientRepository.getInstance();
+        capabilityRepository = CapabilityRepository.getInstance();
     }
 
-    public void importRooms(String path) throws IOException, ParseException {
+    public void importRooms(String path) {
         try (BufferedReader csvReader = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
             String csvHeader = csvReader.readLine();
             String line;
@@ -63,7 +64,7 @@ public class CSVReader {
         }
     }
 
-    public void importClients(String path) throws IOException, ParseException {
+    public void importClients(String path) {
         try (BufferedReader csvReader = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
             String header = csvReader.readLine();
             String line;
@@ -95,7 +96,7 @@ public class CSVReader {
         }
     }
 
-    public void importCapabilities(String path) throws IOException {
+    public void importCapabilities(String path) {
         try (BufferedReader csvReader = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
             String header = csvReader.readLine();
             String line;

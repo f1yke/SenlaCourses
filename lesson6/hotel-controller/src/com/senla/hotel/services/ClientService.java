@@ -1,16 +1,22 @@
 package com.senla.hotel.services;
 
-import com.senla.hotel.entities.*;
+import com.senla.hotel.entities.Capability;
+import com.senla.hotel.entities.Client;
+import com.senla.hotel.entities.Room;
+import com.senla.hotel.entities.RoomStatus;
 import com.senla.hotel.repositories.ClientRepository;
+import com.senla.hotel.utils.DataWriter;
 
-import java.io.*;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 public class ClientService {
     private ClientRepository clientRepository;
 
-    public ClientService(String pathClient) {
-        clientRepository = ClientRepository.getInstance(pathClient);
+    public ClientService() {
+        clientRepository = ClientRepository.getInstance();
     }
 
     public List<Client> getAllClient() {
@@ -68,10 +74,6 @@ public class ClientService {
     }
 
     public void writeToFile(String path) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
-            oos.writeObject(clientRepository.getClients());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new DataWriter().writeObject(clientRepository.getClients(), path);
     }
 }

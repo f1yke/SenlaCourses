@@ -1,11 +1,9 @@
 package com.senla.hotel.repositories;
 
 import com.senla.hotel.entities.Capability;
+import com.senla.hotel.utils.DataReader;
 import org.apache.log4j.Logger;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CapabilityRepository {
@@ -15,22 +13,25 @@ public class CapabilityRepository {
 
     private static CapabilityRepository capabilityRepository;
 
-    public static CapabilityRepository getInstance(String filePath) {
+    public static CapabilityRepository getInstance() {
         if (capabilityRepository == null) {
-            capabilityRepository = new CapabilityRepository(filePath);
+            capabilityRepository = new CapabilityRepository();
         }
         return capabilityRepository;
     }
 
-    public CapabilityRepository(String filePath) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            capabilities = (List<Capability>) ois.readObject();
+    private CapabilityRepository() {
+        PropertyRepository propertyRepository = PropertyRepository.getInstance();
+        capabilities = (List<Capability>) new DataReader().readObjects((String) propertyRepository.getProperty("capabilityPath"));
+        lastId = getLastId();
+    }
+
+    private Integer getLastId() {
+        Integer lastId = -1;
+        if (capabilities.size() > 0) {
             lastId = capabilities.get(capabilities.size() - 1).getId();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            lastId = -1;
-            capabilities = new ArrayList<>();
         }
+        return lastId;
     }
 
     public List<Capability> getCapabilities() {

@@ -1,23 +1,23 @@
 package com.senla.hotel.services;
 
 import com.senla.hotel.repositories.PropertyRepository;
+import org.apache.log4j.Logger;
 
-import java.io.*;
+import java.io.FileInputStream;
 import java.util.Properties;
 
 public class PropertyService {
 
     private PropertyRepository propertyRepository;
+    private Logger logger = Logger.getLogger(PropertyService.class);
 
     public PropertyService() {
         propertyRepository = PropertyRepository.getInstance();
     }
 
     public void readProperties() {
-        FileInputStream fis;
         Properties properties = new Properties();
-        try {
-            fis = new FileInputStream("config.properties");
+        try (FileInputStream fis = new FileInputStream("hotel-controller/resources/config.properties")) {
             properties.load(fis);
             propertyRepository.setProperty("roomPath", properties.getProperty("roomsPath"));
             propertyRepository.setProperty("clientPath", properties.getProperty("clientPath"));
@@ -25,8 +25,8 @@ public class PropertyService {
             propertyRepository.setProperty("historyPath", properties.getProperty("historyPath"));
             propertyRepository.setProperty("isChangeStatus", properties.getProperty("isChangeStatus"));
             propertyRepository.setProperty("countEntry", properties.getProperty("countEntry"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error(e);
         }
     }
 

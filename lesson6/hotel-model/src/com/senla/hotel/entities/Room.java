@@ -82,7 +82,11 @@ public class Room extends Entity implements Cloneable {
         this.client = client;
     }
 
+    @Override
     public Room clone() throws CloneNotSupportedException {
+        Room clone = (Room) super.clone();
+        clone.setId(null);
+        clone.setNumber(null);
         return (Room) super.clone();
     }
 
